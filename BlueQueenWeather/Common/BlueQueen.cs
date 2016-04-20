@@ -28,8 +28,9 @@ namespace BlueQueenWeather.Common
 
         public WeatherInfo[] getData()
         {
-            string API = "https://" + apiUrl + "/" + apiVersion + "/weather";
-            string GET = "?from=2016-04-05&token=" + apiToken;
+            string API = "https://" + apiUrl + "/index.php/" + apiVersion + "/weather";
+            string GET = "?from=2016-04-05";
+            API = @"https://api.bluequeen.tk/index.php/v1/weather?from=4/20/2016";
             Uri Api = new Uri(API);
             getJson(API,GET);
             throw new NotImplementedException();
@@ -40,7 +41,7 @@ namespace BlueQueenWeather.Common
             
             var request = WebRequest.Create(url);
             string text;
-            request.ContentType = "application/json; charset=utf-8";
+            //request.ContentType = "application/json; charset=utf-8";
             var response = (HttpWebResponse)request.GetResponse();
 
             using (var sr = new StreamReader(response.GetResponseStream()))
