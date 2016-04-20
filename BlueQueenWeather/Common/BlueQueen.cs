@@ -1,15 +1,6 @@
-using System;
-using System.Net;
 using Newtonsoft.Json;
+using RestSharp;
 using System.Collections.Generic;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Net;
-using System.IO;
-using System.Text;
-using System.Threading.Tasks;
-using System.Json;
-using System.Security.Cryptography.X509Certificates;
 
 namespace BlueQueenWeather.Common
 {
@@ -26,29 +17,26 @@ namespace BlueQueenWeather.Common
             this.apiVersion = apiVersion;
         }
 
-        public WeatherInfo[] getData()
+        public List<WeatherInfo> getWeatherData(string fromDate = "", string toDate="")
         {
-            string API = "https://" + apiUrl + "/index.php/" + apiVersion + "/weather";
-            string GET = "?from=2016-04-05";
-            API = @"https://api.bluequeen.tk/index.php/v1/weather?from=4/20/2016";
-            Uri Api = new Uri(API);
-            getJson(API,GET);
-            throw new NotImplementedException();
+            string API = apiUrl + "/" + apiVersion + "/";
+            string GET = "";
+            GET += (fromDate != "") ? "from=" + fromDate : "";
+            GET += (toDate != "") ? (GET.Length > 0 ? "&to=" : "to=") + fromDate : "";
+            string json = getJson(API,"weather",GET);
+            var Weather = JsonConvert.DeserializeObject<List<WeatherInfo>>(json);
+            return Weather;
         }
 
-        private static void getJson(string url, string GET)
+        private string getJson(string url,string resource, string GET = "")
         {
-            
-            var request = WebRequest.Create(url);
-            string text;
-            //request.ContentType = "application/json; charset=utf-8";
-            var response = (HttpWebResponse)request.GetResponse();
-
-            using (var sr = new StreamReader(response.GetResponseStream()))
-            {
-                text = sr.ReadToEnd();
-            }
-            text = "";
+            string FQ = (GET.Length > 0) ? resource + "?token={api_token}&" + GET : resource + "?token={api_token}";
+            var client = new RestClient(url);
+            var request = new RestRequest(FQ, Method.GET);
+            request.AddParameter("api_token", apiToken, ParameterType.UrlSegment);
+            IRestResponse response = client.Execute(request);
+            var content = response.Content;
+            return content;
         }
 
     }

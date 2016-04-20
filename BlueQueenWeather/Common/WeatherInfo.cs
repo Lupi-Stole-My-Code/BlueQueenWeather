@@ -13,8 +13,8 @@ namespace BlueQueenWeather.Common
         [JsonProperty("ID")]
         public int ID { get; set; }
         [JsonProperty("Date")]
-        public string Date { get; set; }
+        public DateTime Date { get; set; }
         [JsonProperty("Value")]
-        public string Value { get; set; }
+        public double Value { get; set; }
     }
 }
