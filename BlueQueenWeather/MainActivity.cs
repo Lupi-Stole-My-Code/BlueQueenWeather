@@ -14,7 +14,7 @@ using System.Globalization;
 
 namespace BlueQueenWeather
 {
-    [Activity(Label = "BlueQueenWeather", MainLauncher = true, Icon = "@drawable/icon")]
+    [Activity(Label = "BlueQueenWeather", MainLauncher = false, Icon = "@drawable/icon")]
     public class MainActivity : Activity
     {
         BlueQueen BQ;
