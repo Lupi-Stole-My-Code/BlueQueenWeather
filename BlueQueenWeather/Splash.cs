@@ -15,12 +15,12 @@ using System.Threading.Tasks;
 
 namespace BlueQueenWeather
 {
-	[Activity(Theme = "@style/MyTheme.Splash", Label = "Splash", MainLauncher = true, NoHistory = true)]
+	[Activity(Theme = "@style/MyTheme.Splash", Label = "Splash", MainLauncher = true, NoHistory = true, Icon = "@drawable/icon")]
 	public class Splash : Activity
 	{
 		static readonly string TAG = "X:" + typeof(Splash).Name;
 
-		public override void OnCreate(Bundle savedInstanceState)
+		protected override void OnCreate(Bundle savedInstanceState)
 		{
 			base.OnCreate(savedInstanceState);
 			Log.Debug(TAG, "SplashActivity.OnCreate");
