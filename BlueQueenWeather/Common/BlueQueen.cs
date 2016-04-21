@@ -19,13 +19,18 @@ namespace BlueQueenWeather.Common
 
         public List<WeatherInfo> getWeatherData(string fromDate = "", string toDate="")
         {
+            string json = getWeatherDataJsonOnly(fromDate, toDate);
+            var Weather = JsonConvert.DeserializeObject<List<WeatherInfo>>(json);
+            return Weather;
+        }
+
+        public string getWeatherDataJsonOnly(string fromDate = "", string toDate="")
+        {
             string API = apiUrl + "/" + apiVersion + "/";
             string GET = "";
             GET += (fromDate != "") ? "from=" + fromDate : "";
             GET += (toDate != "") ? (GET.Length > 0 ? "&to=" : "to=") + fromDate : "";
-            string json = getJson(API,"weather",GET);
-            var Weather = JsonConvert.DeserializeObject<List<WeatherInfo>>(json);
-            return Weather;
+            return getJson(API, "weather", GET);
         }
 
         private string getJson(string url,string resource, string GET = "")
@@ -37,6 +42,11 @@ namespace BlueQueenWeather.Common
             IRestResponse response = client.Execute(request);
             var content = response.Content;
             return content;
+        }
+
+        public List<T> deserializeJson<T>(string Json)
+        {
+            return JsonConvert.DeserializeObject<List<T>>(Json);
         }
 
     }

@@ -14,11 +14,10 @@ using System.Globalization;
 
 namespace BlueQueenWeather
 {
-    [Activity(Label = "BlueQueenWeather", Icon = "@drawable/icon")]
+    [Activity(Label = "BlueQueenWeather", Icon = "@drawable/splash")]
     public class MainActivity : Activity
     {
         BlueQueen BQ;
-        //WeatherInfo[] WeatherData;
         List<WeatherInfo> WeatherData = new List<WeatherInfo>();
 
         //test
@@ -35,20 +34,31 @@ namespace BlueQueenWeather
 
             BQ = new BlueQueen(@"http://usafeapi.bluequeen.tk", "v1", "token");
 
-            //WeatherData = BQ.getWeatherData(fromDate: DateTime.Now.ToString());  //Przykładowe pobranie dzisiejszych danych (zwraca tablicę WeatherInfo)
+            //WeatherData = BQ.getWeatherData(fromDate: DateTime.Now.ToString());  
+            //Przykładowe pobranie dzisiejszych danych (zwraca tablicę WeatherInfo)
+
             tx1 = FindViewById<TextView>(Resource.Id.textView1);
             tx2 = FindViewById<TextView>(Resource.Id.textView2);
             button = FindViewById<Button>(Resource.Id.button1);
             button.Click += test;
-            test(null, null);
+
+            string text = Intent.GetStringExtra("WeatherData") ?? "[]";
+            WeatherData = BQ.deserializeJson<WeatherInfo>(text);
+            fillTextboxes();
         }
 
         private void test(object sender, EventArgs e)
         {
             CultureInfo culture = new CultureInfo("en-US");
-            WeatherData = BQ.getWeatherData(fromDate: DateTime.Now.ToString("d", culture)); // inny sposób na datę. (wymaga daty numerycznej)
+            WeatherData = BQ.getWeatherData(fromDate: DateTime.Now.ToString("d", culture)); 
+            // inny sposób na datę. (wymaga daty numerycznej)
+            fillTextboxes();
+        }
+
+        private void fillTextboxes()
+        {
             var data = WeatherData.FindLast(x => x.Value > -40);
-            tx1.Text = data.Date.ToLongDateString() + " " + data.Date.ToLongTimeString(); 
+            tx1.Text = data.Date.ToLongDateString() + " " + data.Date.ToLongTimeString();
             tx2.Text = string.Format("{0}°C", data.Value.ToString());
         }
 
