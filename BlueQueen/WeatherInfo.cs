@@ -1,7 +1,7 @@
 using System;
 using Newtonsoft.Json;
 
-namespace BlueQueenWeather.Common
+namespace BlueQueen
 {
     public class WeatherInfos
     {

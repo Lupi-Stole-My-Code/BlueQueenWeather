@@ -1,16 +1,20 @@
 using Newtonsoft.Json;
-using RestSharp;
+using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
 
-namespace BlueQueenWeather.Common
+namespace BlueQueen
 {
-    class BlueQueen
+    public class BlueQueenCore
     {
         string apiUrl;
         string apiToken;
         string apiVersion;
 
-        public BlueQueen(string apiUrl, string apiVersion, string apiToken)
+        public BlueQueenCore(string apiUrl, string apiVersion, string apiToken)
         {
             this.apiUrl = apiUrl;
             this.apiToken = apiToken;
@@ -36,13 +40,14 @@ namespace BlueQueenWeather.Common
         private string getJson(string url,string resource, string GET = "")
         {
             string FQ = (GET.Length > 0) ? resource + "?token={api_token}&" + GET : resource + "?token={api_token}";
-            var client = new RestClient(url);
-            var request = new RestRequest(FQ, Method.GET);
-            request.AddParameter("api_token", apiToken, ParameterType.UrlSegment);
-            IRestResponse response = client.Execute(request);
-            var content = response.Content;
-            return content;
+            var client = new HttpClient();
+            client.BaseAddress = new Uri(url);
+            var response = client.GetAsync(FQ).Result;
+
+            return response.Content.ReadAsStringAsync().Result;
         }
+
+       
 
         public List<T> deserializeJson<T>(string Json)
         {

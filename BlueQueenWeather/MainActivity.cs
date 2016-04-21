@@ -5,19 +5,19 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
-using BlueQueenWeather.Common;
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
 using System.Net.Security;
 using System.Collections.Generic;
 using System.Globalization;
+using BlueQueen;
 
 namespace BlueQueenWeather
 {
     [Activity(Label = "BlueQueenWeather", Icon = "@drawable/splash")]
     public class MainActivity : Activity
     {
-        BlueQueen BQ;
+        BlueQueenCore BQ;
         List<WeatherInfo> WeatherData = new List<WeatherInfo>();
 
         //test
@@ -32,7 +32,7 @@ namespace BlueQueenWeather
             SetContentView(Resource.Layout.Main);
             ServicePointManager.ServerCertificateValidationCallback = validatedCertificate;
 
-            BQ = new BlueQueen(@"http://usafeapi.bluequeen.tk", "v1", "token");
+            BQ = new BlueQueenCore(@"http://usafeapi.bluequeen.tk", "v1", "token");
 
             //WeatherData = BQ.getWeatherData(fromDate: DateTime.Now.ToString());  
             //Przykładowe pobranie dzisiejszych danych (zwraca tablicę WeatherInfo)

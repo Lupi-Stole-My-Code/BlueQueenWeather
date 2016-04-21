@@ -65,8 +65,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Common\BlueQueen.cs" />
-    <Compile Include="Common\WeatherInfo.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -102,6 +100,15 @@
       <Visible>False</Visible>
       <Version>3.2.0.0</Version>
     </XamarinComponentReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BlueQueen\BlueQueen.csproj">
+      <Project>{f272997f-0a98-4721-a5ef-8da587c4b936}</Project>
+      <Name>BlueQueen</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Common\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

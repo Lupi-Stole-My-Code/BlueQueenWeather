@@ -12,8 +12,8 @@ using Android.Views;
 using Android.Widget;
 using Android.Util;
 using System.Threading.Tasks;
-using BlueQueenWeather.Common;
 using System.Globalization;
+using BlueQueen;
 
 namespace BlueQueenWeather
 {
@@ -21,14 +21,14 @@ namespace BlueQueenWeather
 	public class Splash : Activity
 	{
 		static readonly string TAG = "X:" + typeof(Splash).Name;
-        BlueQueen BQ;
+        BlueQueenCore BQ;
         string WeatherJson;
 
         protected override void OnCreate(Bundle savedInstanceState)
 		{
 			base.OnCreate(savedInstanceState);
 			Log.Debug(TAG, "Splash.OnCreate");
-            BQ = new BlueQueen(@"http://usafeapi.bluequeen.tk", "v1", "token");
+            BQ = new BlueQueenCore(@"http://usafeapi.bluequeen.tk", "v1", "token");
         }
 
 		protected override void OnResume()
