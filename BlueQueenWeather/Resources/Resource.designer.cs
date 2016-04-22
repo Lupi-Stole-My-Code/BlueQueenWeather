@@ -44,20 +44,38 @@ namespace BlueQueenWeather
 		public partial class Color
 		{
 			
+			// aapt resource value: 0x7f040005
+			public const int accent = 2130968581;
+			
+			// aapt resource value: 0x7f040009
+			public const int divider = 2130968585;
+			
+			// aapt resource value: 0x7f040008
+			public const int icons = 2130968584;
+			
 			// aapt resource value: 0x7f040002
-			public const int accent = 2130968578;
-			
-			// aapt resource value: 0x7f040000
-			public const int primary = 2130968576;
-			
-			// aapt resource value: 0x7f040001
-			public const int primaryDark = 2130968577;
-			
-			// aapt resource value: 0x7f040004
-			public const int splash_background = 2130968580;
+			public const int primary = 2130968578;
 			
 			// aapt resource value: 0x7f040003
-			public const int window_background = 2130968579;
+			public const int primary_dark = 2130968579;
+			
+			// aapt resource value: 0x7f040004
+			public const int primary_light = 2130968580;
+			
+			// aapt resource value: 0x7f040006
+			public const int primary_text = 2130968582;
+			
+			// aapt resource value: 0x7f040007
+			public const int secondary_text = 2130968583;
+			
+			// aapt resource value: 0x7f040001
+			public const int splash_background = 2130968577;
+			
+			// aapt resource value: 0x7f04000a
+			public const int white = 2130968586;
+			
+			// aapt resource value: 0x7f040000
+			public const int window_background = 2130968576;
 			
 			static Color()
 			{
@@ -76,10 +94,13 @@ namespace BlueQueenWeather
 			public const int Icon = 2130837504;
 			
 			// aapt resource value: 0x7f020001
-			public const int splash = 2130837505;
+			public const int RoundButton = 2130837505;
 			
 			// aapt resource value: 0x7f020002
-			public const int splash_logo = 2130837506;
+			public const int splash = 2130837506;
+			
+			// aapt resource value: 0x7f020003
+			public const int splash_logo = 2130837507;
 			
 			static Drawable()
 			{

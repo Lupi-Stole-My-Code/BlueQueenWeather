@@ -8,13 +8,21 @@
         android:minWidth="25px"
         android:minHeight="25px"
         android:layout_width="match_parent"
-        android:layout_height="100.5dp"
-        android:id="@+id/linearLayout1">
+        android:layout_height="130.0dp"
+        android:id="@+id/linearLayout1"
+        android:layout_marginBottom="40.5dp">
         <Button
             android:text="Refresh"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/button1" />
+            android:layout_width="100.0dp"
+            android:layout_height="100.0dp"
+            android:id="@+id/button1"
+            android:background="@drawable/roundbutton"
+            android:textColor="@color/white"
+            android:layout_marginTop="17dp"
+            android:layout_marginBottom="30dp"
+            android:gravity="center"
+            android:layout_gravity="right"
+            android:layout_marginRight="17dp" />
     </LinearLayout>
     <LinearLayout
         android:orientation="vertical"
@@ -28,12 +36,15 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/textView1" />
+            android:id="@+id/textView1"
+            android:gravity="center_horizontal"
+            android:layout_marginBottom="24.5dp" />
         <TextView
             android:text="Large Text"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/textView2" />
+            android:id="@+id/textView2"
+            android:gravity="center_horizontal" />
     </LinearLayout>
 </LinearLayout>
