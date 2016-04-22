@@ -16,13 +16,13 @@
             android:layout_width="100.0dp"
             android:layout_height="100.0dp"
             android:id="@+id/button1"
-            android:background="@drawable/roundbutton"
             android:textColor="@color/white"
             android:layout_marginTop="17dp"
             android:layout_marginBottom="30dp"
             android:gravity="center"
             android:layout_gravity="right"
-            android:layout_marginRight="17dp" />
+            android:layout_marginRight="17dp"
+            android:background="@drawable/roundbutton" />
     </LinearLayout>
     <LinearLayout
         android:orientation="vertical"

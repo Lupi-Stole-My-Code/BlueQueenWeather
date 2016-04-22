@@ -11,10 +11,11 @@ using System.Net.Security;
 using System.Collections.Generic;
 using System.Globalization;
 using BlueQueen;
+using Android.Graphics.Drawables;
 
 namespace BlueQueenWeather
 {
-    [Activity(Label = "BlueQueen Weather Service", Icon = "@drawable/splash")]
+    [Activity(Label = "BlueQueen Weather", Icon = "@drawable/splash")]
     public class MainActivity : Activity
     {
         BlueQueenCore BQ;
@@ -29,7 +30,15 @@ namespace BlueQueenWeather
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
+
             SetContentView(Resource.Layout.Main);
+
+            if ((int)Android.OS.Build.VERSION.SdkInt >= 21)
+            {
+                ActionBar.SetIcon(
+                  new ColorDrawable(Resources.GetColor(Android.Resource.Color.Transparent)));
+            }
+            
             ServicePointManager.ServerCertificateValidationCallback = validatedCertificate;
 
             BQ = new BlueQueenCore(@"http://usafeapi.bluequeen.tk", "v1", "token");
