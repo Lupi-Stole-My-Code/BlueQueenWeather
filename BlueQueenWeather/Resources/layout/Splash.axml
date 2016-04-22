@@ -1,13 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item>
-        <color
-            android:color="@color/splash_background" />
-    </item>
-    <item>
-        <bitmap
-            android:src="@drawable/splash"
-            android:tileMode="disabled"
-            android:gravity="center" />
-    </item>
-</layer-list>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:minWidth="25px"
+    android:minHeight="25px">
+    <LinearLayout
+        android:orientation="vertical"
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="match_parent"
+        android:layout_height="563.0dp"
+        android:id="@+id/linearLayout1"
+        android:layout_marginBottom="333.0dp">
+        <TextView
+            android:text="Ładowanie"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_width="match_parent"
+            android:layout_height="76.0dp"
+            android:id="@+id/loadingState"
+            android:layout_marginTop="441.0dp"
+            android:layout_marginLeft="80.0dp"
+            android:layout_marginRight="81.0dp"
+            android:gravity="center"
+            android:textColor="@color/accent" />
+    </LinearLayout>
+</LinearLayout>

@@ -103,6 +103,9 @@ namespace BlueQueenWeather
 			// aapt resource value: 0x7f070002
 			public const int linearLayout2 = 2131165186;
 			
+			// aapt resource value: 0x7f070005
+			public const int loadingState = 2131165189;
+			
 			// aapt resource value: 0x7f070003
 			public const int textView1 = 2131165187;
 			
@@ -126,7 +129,7 @@ namespace BlueQueenWeather
 			public const int Main = 2130903040;
 			
 			// aapt resource value: 0x7f030001
-			public const int Splash = 2130903041;
+			public const int splash = 2130903041;
 			
 			static Layout()
 			{

@@ -23,11 +23,15 @@ namespace BlueQueenWeather
 		static readonly string TAG = "X:" + typeof(Splash).Name;
         BlueQueenCore BQ;
         string WeatherJson;
+        TextView loadingInfo;
 
         protected override void OnCreate(Bundle savedInstanceState)
 		{
-			base.OnCreate(savedInstanceState);
+            RequestWindowFeature(WindowFeatures.NoTitle);
+            base.OnCreate(savedInstanceState);
 			Log.Debug(TAG, "Splash.OnCreate");
+            SetContentView(Resource.Layout.splash);
+            loadingInfo = FindViewById<TextView>(Resource.Id.loadingState);
             BQ = new BlueQueenCore(@"http://usafeapi.bluequeen.tk", "v1", "token");
         }
 
@@ -39,6 +43,7 @@ namespace BlueQueenWeather
 				Log.Debug(TAG, "Performing some startup work that takes a bit of time.");
 				//Task.Delay(5000);  // Simulate a bit of startup work.
                 CultureInfo culture = new CultureInfo("en-US");
+                loadingInfo.Text = "Pobieranie danych";
                 WeatherJson = BQ.getWeatherDataJsonOnly(fromDate: DateTime.Now.ToString("d", culture));
                 Log.Debug(TAG, "Working in the background - important stuff.");
 			});
@@ -47,7 +52,7 @@ namespace BlueQueenWeather
 				Log.Debug(TAG, "Work is finished - start Activity1.");
                 var MainActiv = new Intent(Application.Context, typeof(MainActivity));
                 MainActiv.PutExtra("WeatherData", WeatherJson);
-
+                loadingInfo.Text = "Ładowanie zakończone";
                 StartActivity(MainActiv);
 			}, TaskScheduler.FromCurrentSynchronizationContext());
 
