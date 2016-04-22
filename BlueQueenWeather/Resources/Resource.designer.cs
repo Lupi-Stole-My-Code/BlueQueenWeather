@@ -94,6 +94,9 @@ namespace BlueQueenWeather
 		public partial class Id
 		{
 			
+			// aapt resource value: 0x7f070006
+			public const int btn_retry = 2131165190;
+			
 			// aapt resource value: 0x7f070001
 			public const int button1 = 2131165185;
 			

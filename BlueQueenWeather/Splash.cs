@@ -24,6 +24,7 @@ namespace BlueQueenWeather
         BlueQueenCore BQ;
         string WeatherJson;
         TextView loadingInfo;
+        Button btn_retry;
 
         protected override void OnCreate(Bundle savedInstanceState)
 		{
@@ -32,16 +33,26 @@ namespace BlueQueenWeather
 			Log.Debug(TAG, "Splash.OnCreate");
             SetContentView(Resource.Layout.splash);
             loadingInfo = FindViewById<TextView>(Resource.Id.loadingState);
+            btn_retry = FindViewById<Button>(Resource.Id.btn_retry);
+            btn_retry.Click += connection_retry;
             BQ = new BlueQueenCore(@"http://usafeapi.bluequeen.tk", "v1", "token");
         }
 
-		protected override void OnResume()
+        private void connection_retry(object sender, EventArgs e)
+        {
+            btn_retry.Visibility = ViewStates.Gone;
+            Intent intent = new Intent(Application.Context, typeof(Splash));
+            Finish();
+            StartActivity(intent);
+        }
+
+        protected override void OnResume()
 		{
 			base.OnResume();
 
 			Task startupWork = new Task(() => {
 				Log.Debug(TAG, "Performing some startup work that takes a bit of time.");
-				//Task.Delay(5000);  // Simulate a bit of startup work.
+                //Task.Delay(5000);  // Simulate a bit of startup work.
                 CultureInfo culture = new CultureInfo("en-US");
                 loadingInfo.Text = "Pobieranie danych";
                 WeatherJson = BQ.getWeatherDataJsonOnly(fromDate: DateTime.Now.ToString("d", culture));
@@ -51,9 +62,17 @@ namespace BlueQueenWeather
 			startupWork.ContinueWith(t => {
 				Log.Debug(TAG, "Work is finished - start Activity1.");
                 var MainActiv = new Intent(Application.Context, typeof(MainActivity));
-                MainActiv.PutExtra("WeatherData", WeatherJson);
-                loadingInfo.Text = "Ładowanie zakończone";
-                StartActivity(MainActiv);
+                if (WeatherJson == null)
+                {
+                    loadingInfo.Text = "Błąd połączenia";
+                    btn_retry.Visibility = ViewStates.Visible;
+                }
+                else
+                {
+                    MainActiv.PutExtra("WeatherData", WeatherJson);
+                    loadingInfo.Text = "Ładowanie zakończone";
+                    StartActivity(MainActiv);
+                }
 			}, TaskScheduler.FromCurrentSynchronizationContext());
 
 			startupWork.Start();

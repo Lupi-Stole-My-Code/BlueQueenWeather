@@ -42,6 +42,9 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Mono.Android">
+      <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\MonoAndroid\v4.4\Mono.Android.dll</HintPath>
+    </Reference>
     <Reference Include="OkHttp">
       <HintPath>D:\ROOT\Greg\Downloads\modernhttpclient-2.4.2\modernhttpclient-2.4.2\lib\android\OkHttp.dll</HintPath>
     </Reference>

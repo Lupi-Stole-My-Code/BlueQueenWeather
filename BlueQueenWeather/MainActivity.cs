@@ -14,7 +14,7 @@ using BlueQueen;
 
 namespace BlueQueenWeather
 {
-    [Activity(Label = "BlueQueenWeather", Icon = "@drawable/splash")]
+    [Activity(Label = "BlueQueenWeather")]
     public class MainActivity : Activity
     {
         BlueQueenCore BQ;

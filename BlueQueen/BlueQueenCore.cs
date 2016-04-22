@@ -43,11 +43,8 @@ namespace BlueQueen
             var client = new HttpClient();
             client.BaseAddress = new Uri(url);
             var response = client.GetAsync(FQ).Result;
-
             return response.Content.ReadAsStringAsync().Result;
         }
-
-       
 
         public List<T> deserializeJson<T>(string Json)
         {
