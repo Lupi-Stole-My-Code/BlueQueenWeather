@@ -15,7 +15,7 @@ using Android.Graphics.Drawables;
 
 namespace BlueQueenWeather
 {
-    [Activity(Label = "BlueQueen Weather", Icon = "@drawable/splash")]
+    [Activity(Label = "BlueQueen Weather")]
     public class MainActivity : Activity
     {
         BlueQueenCore BQ;
