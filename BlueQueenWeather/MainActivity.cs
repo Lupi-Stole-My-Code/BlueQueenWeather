@@ -62,6 +62,8 @@ namespace BlueQueenWeather
             WeatherData = BQ.getWeatherData(fromDate: DateTime.Now.ToString("d", culture)); 
             // inny sposób na datę. (wymaga daty numerycznej)
             fillTextboxes();
+            Toast toast = Toast.MakeText(this, "Pomyślnie zaktualizowano", ToastLength.Short);
+            toast.Show();
         }
 
         private void fillTextboxes()
