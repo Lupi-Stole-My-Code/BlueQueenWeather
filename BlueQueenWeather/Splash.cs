@@ -41,9 +41,7 @@ namespace BlueQueenWeather
         private void connection_retry(object sender, EventArgs e)
         {
             btn_retry.Visibility = ViewStates.Gone;
-            Intent intent = new Intent(Application.Context, typeof(Splash));
-            Finish();
-            StartActivity(intent);
+            Recreate();
         }
 
         protected override void OnResume()
