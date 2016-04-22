@@ -17,7 +17,7 @@ using BlueQueen;
 
 namespace BlueQueenWeather
 {
-	[Activity(Theme = "@style/MyTheme.Splash", Label = "BlueQueen Weather", MainLauncher = true, NoHistory = true, Icon = "@drawable/splash")]
+	[Activity(Theme = "@style/MyTheme.Splash", Label = "BlueQueen Weather", MainLauncher = true, NoHistory = true)]
 	public class Splash : Activity
 	{
 		static readonly string TAG = "X:" + typeof(Splash).Name;
