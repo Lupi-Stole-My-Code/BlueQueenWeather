@@ -3,11 +3,6 @@ using Newtonsoft.Json;
 
 namespace BlueQueen
 {
-    public class WeatherInfos
-    {
-        public WeatherInfo[] Property1 { get; set; }
-    }
-
     public class WeatherInfo
     {
         [JsonProperty("ID")]
