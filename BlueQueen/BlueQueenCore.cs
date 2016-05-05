@@ -28,6 +28,13 @@ namespace BlueQueen
             return Weather;
         }
 
+		public List<PressureInfo> getPressureData(string fromDate = "", string toDate="")
+		{
+			string json = getPressureDataJsonOnly(fromDate, toDate);
+			var Weather = JsonConvert.DeserializeObject<List<PressureInfo>>(json);
+			return Weather;
+		}
+
         public string getWeatherDataJsonOnly(string fromDate = "", string toDate="")
         {
             string API = apiUrl + "/" + apiVersion + "/";
@@ -36,6 +43,15 @@ namespace BlueQueen
             GET += (toDate != "") ? (GET.Length > 0 ? "&to=" : "to=") + fromDate : "";
             return getJson(API, "weather", GET);
         }
+
+		public string getPressureDataJsonOnly(string fromDate = "", string toDate="")
+		{
+			string API = apiUrl + "/" + apiVersion + "/";
+			string GET = "";
+			GET += (fromDate != "") ? "from=" + fromDate : "";
+			GET += (toDate != "") ? (GET.Length > 0 ? "&to=" : "to=") + fromDate : "";
+			return getJson(API, "pressure", GET);
+		}
 
         private string getJson(string url,string resource, string GET = "")
         {

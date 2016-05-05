@@ -12,4 +12,14 @@ namespace BlueQueen
         [JsonProperty("Value")]
         public double Value { get; set; }
     }
+
+	public class PressureInfo
+	{
+		[JsonProperty("ID")]
+		public int ID { get; set; }
+		[JsonProperty("Date")]
+		public DateTime Date { get; set; }
+		[JsonProperty("Pressure")]
+		public double Value { get; set; }
+	}
 }
