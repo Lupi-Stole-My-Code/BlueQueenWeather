@@ -6,6 +6,8 @@ using Android.OS;
 using Android.Widget;
 using BlueQueen;
 using System.Globalization;
+using Android.Runtime;
+using Android.Content.Res;
 
 namespace SimpleWidget
 {
@@ -14,8 +16,8 @@ namespace SimpleWidget
     {
 
         double timer = 1.5; // time interval in minutes
-        ComponentName thisWidget;
-        AppWidgetManager manager;
+        ComponentName thisWidget = null;
+        AppWidgetManager manager = null;
         public override void OnStart(Intent intent, int startId)
         {
             thisWidget = new ComponentName(this, Java.Lang.Class.FromType(typeof(WordWidget)).Name);
@@ -26,6 +28,25 @@ namespace SimpleWidget
             t.Elapsed += T_Elapsed;
             t.Interval = (int)(timer * 1000 * 60);
             t.Start();
+        }
+
+        [return: GeneratedEnum]
+        public override StartCommandResult OnStartCommand(Intent intent, [GeneratedEnum] StartCommandFlags flags, int startId)
+        {
+            if (thisWidget != null && manager != null)
+            {
+                T_Elapsed(null, null);
+            }
+            return base.OnStartCommand(intent, flags, startId);
+        }
+
+        public override void OnConfigurationChanged(Configuration newConfig)
+        {
+            if (thisWidget != null && manager != null)
+            {
+                T_Elapsed(null, null);
+            }
+            base.OnConfigurationChanged(newConfig);
         }
 
         private void T_Elapsed(object sender, System.Timers.ElapsedEventArgs e)

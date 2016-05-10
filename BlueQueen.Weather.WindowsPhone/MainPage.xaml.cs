@@ -25,9 +25,6 @@ namespace BlueQueen.Weather.WindowsPhone
             this.InitializeComponent();
 
             this.NavigationCacheMode = NavigationCacheMode.Required;
-
-            ToastTemplateType toastTemplate = ToastTemplateType.ToastImageAndText01;
-            XmlDocument toastXml = ToastNotificationManager.GetTemplateContent(toastTemplate);
             //tile
             var tileXml = TileUpdateManager.GetTemplateContent(TileTemplateType.TileSquare150x150PeekImageAndText01);
             var tileImage = tileXml.GetElementsByTagName("image")[0] as XmlElement;
