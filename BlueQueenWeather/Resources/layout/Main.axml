@@ -47,4 +47,12 @@
             android:id="@+id/textView2"
             android:gravity="center_horizontal" />
     </LinearLayout>
+    <TextView
+        android:text="Large Text"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/cisnienie"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="40.5dp" />
 </LinearLayout>

@@ -19,7 +19,7 @@ namespace BlueQueen
 		public int ID { get; set; }
 		[JsonProperty("Date")]
 		public DateTime Date { get; set; }
-		[JsonProperty("Pressure")]
-		public double Value { get; set; }
+		[JsonProperty("Value")]
+		public double Pressure { get; set; }
 	}
 }

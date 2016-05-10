@@ -20,11 +20,13 @@ namespace BlueQueenWeather
     {
         BlueQueenCore BQ;
         List<WeatherInfo> WeatherData = new List<WeatherInfo>();
+        List<PressureInfo> PressureData = new List<PressureInfo>();
 
         //test
         Button button;
         TextView tx1;
         TextView tx2;
+        TextView pressureTxt;
         //////
 
         protected override void OnCreate(Bundle bundle)
@@ -48,18 +50,22 @@ namespace BlueQueenWeather
 
             tx1 = FindViewById<TextView>(Resource.Id.textView1);
             tx2 = FindViewById<TextView>(Resource.Id.textView2);
+            pressureTxt = FindViewById<TextView>(Resource.Id.cisnienie);
             button = FindViewById<Button>(Resource.Id.button1);
             button.Click += test;
 
             string text = Intent.GetStringExtra("WeatherData") ?? "[]";
             WeatherData = BQ.deserializeJson<WeatherInfo>(text);
+            string text1 = Intent.GetStringExtra("PressureData") ?? "[]";
+            PressureData = BQ.deserializeJson<PressureInfo>(text);
             fillTextboxes();
         }
 
         private void test(object sender, EventArgs e)
         {
             CultureInfo culture = new CultureInfo("en-US");
-            WeatherData = BQ.getWeatherData(fromDate: DateTime.Now.ToString("d", culture)); 
+            WeatherData = BQ.getWeatherData(fromDate: DateTime.Now.ToString("d", culture));
+            PressureData = BQ.getPressureData(fromDate: DateTime.Now.ToString("d", culture));
             // inny sposób na datę. (wymaga daty numerycznej)
             fillTextboxes();
             Toast toast = Toast.MakeText(this, "Pomyślnie zaktualizowano", ToastLength.Short);
@@ -71,6 +77,8 @@ namespace BlueQueenWeather
             var data = WeatherData.FindLast(x => x.Value > -40);
             tx1.Text = data.Date.ToLongDateString() + " " + data.Date.ToLongTimeString();
             tx2.Text = string.Format("{0}°C", data.Value.ToString());
+            var press = PressureData.FindLast(x => x.ID > 0);
+            pressureTxt.Text = string.Format("{0} hPa", press.Pressure.ToString());
         }
 
         private bool validatedCertificate(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)

@@ -23,6 +23,7 @@ namespace BlueQueenWeather
 		static readonly string TAG = "X:" + typeof(Splash).Name;
         BlueQueenCore BQ;
         string WeatherJson;
+        string PressureJson;
         TextView loadingInfo;
         Button btn_retry;
 
@@ -54,6 +55,7 @@ namespace BlueQueenWeather
                 CultureInfo culture = new CultureInfo("en-US");
                 loadingInfo.Text = "Pobieranie danych";
                 WeatherJson = BQ.getWeatherDataJsonOnly(fromDate: DateTime.Now.ToString("d", culture));
+                PressureJson = BQ.getPressureDataJsonOnly(fromDate: DateTime.Now.ToString("d", culture));
                 Log.Debug(TAG, "Working in the background - important stuff.");
 			});
 
@@ -68,6 +70,7 @@ namespace BlueQueenWeather
                 else
                 {
                     MainActiv.PutExtra("WeatherData", WeatherJson);
+                    MainActiv.PutExtra("PressureData", PressureJson);
                     loadingInfo.Text = "Ładowanie zakończone";
                     StartActivity(MainActiv);
                 }

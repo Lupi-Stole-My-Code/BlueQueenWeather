@@ -55,8 +55,8 @@ namespace SimpleWidget
             var WeatherData = BQ.getWeatherData(fromDate: DateTime.Now.ToString("d", culture));
             var entry = WeatherData.FindLast(x => x.ID > 0);
 
-            //var PressureData = BQ.getPressureData(fromDate: DateTime.Now.ToString("d", culture));
-           // var entry2 = PressureData.FindLast(x => x.ID > 0);
+            var PressureData = BQ.getPressureData(fromDate: DateTime.Now.ToString("d", culture));
+            var entry2 = PressureData.FindLast(x => x.ID > 0);
 
 			// Build an update that holds the updated widget contents
 			var updateViews = new RemoteViews (context.PackageName, Resource.Layout.widget_word);
