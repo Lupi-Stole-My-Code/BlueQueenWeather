@@ -1,20 +1,4 @@
-﻿/*
- * Copyright (C) 2009 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-using System;
+﻿using System;
 using Android.App;
 using Android.Appwidget;
 using Android.Content;
@@ -28,14 +12,25 @@ namespace SimpleWidget
     [Service]
     public class UpdateService : Service
     {
+
+        double timer = 1.5; // time interval in minutes
+        ComponentName thisWidget;
+        AppWidgetManager manager;
         public override void OnStart(Intent intent, int startId)
         {
-            // Build the widget update for today
-            RemoteViews updateViews = buildUpdate(this);
+            thisWidget = new ComponentName(this, Java.Lang.Class.FromType(typeof(WordWidget)).Name);
+            manager = AppWidgetManager.GetInstance(this);
+            T_Elapsed(null, null);
 
-            // Push update for this widget to the home screen
-            ComponentName thisWidget = new ComponentName(this, Java.Lang.Class.FromType(typeof(WordWidget)).Name);
-            AppWidgetManager manager = AppWidgetManager.GetInstance(this);
+            System.Timers.Timer t = new System.Timers.Timer();
+            t.Elapsed += T_Elapsed;
+            t.Interval = (int)(timer * 1000 * 60);
+            t.Start();
+        }
+
+        private void T_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            RemoteViews updateViews = buildUpdate(this);
             manager.UpdateAppWidget(thisWidget, updateViews);
         }
 
@@ -45,9 +40,6 @@ namespace SimpleWidget
             return null;
         }
 
-
-        // Build a widget update to show the current Wiktionary
-        // "Word of the day." Will block until the online API returns.
         public RemoteViews buildUpdate(Context context)
         {
             var BQ = new BlueQueenCore(@"http://usafeapi.bluequeen.tk", "v1", "token");
@@ -62,15 +54,7 @@ namespace SimpleWidget
             var updateViews = new RemoteViews(context.PackageName, Resource.Layout.widget_word);
 
             updateViews.SetTextViewText(Resource.Id.blog_title, entry.Date.ToLongDateString() + " " + entry.Date.ToLongTimeString());
-            updateViews.SetTextViewText(Resource.Id.creator, entry.Value.ToString() + "°C | " + entry2.Pressure.ToString() + "hPa");
-
-            // When user clicks on widget, launch to Wiktionary definition page
-            //if (!string.IsNullOrEmpty (entry.Link)) {
-            //	Intent defineIntent = new Intent (Intent.ActionView, Android.Net.Uri.Parse (entry.Link));
-
-            //	PendingIntent pendingIntent = PendingIntent.GetActivity (context, 0, defineIntent, 0);
-            //	updateViews.SetOnClickPendingIntent (Resource.Id.widget, pendingIntent);
-            //}
+            updateViews.SetTextViewText(Resource.Id.creator, "Wejherowo | " + entry.Value.ToString() + "°C | " + entry2.Pressure.ToString() + " hPa");
 
             return updateViews;
         }
