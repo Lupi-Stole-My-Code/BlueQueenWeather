@@ -1,24 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using BlueQueen;
-using System.Net;
-//using System.Security.Cryptography.X509Certificates;
-//using System.Net.Security;
-using System.Collections.Generic;
 using System.Globalization;
-using Windows.Phone.Notification;
 using Windows.UI.Notifications;
 using Windows.Data.Xml.Dom;
 
@@ -43,6 +28,7 @@ namespace BlueQueen.Weather.WindowsPhone
 
             ToastTemplateType toastTemplate = ToastTemplateType.ToastImageAndText01;
             XmlDocument toastXml = ToastNotificationManager.GetTemplateContent(toastTemplate);
+            //tile
             var tileXml = TileUpdateManager.GetTemplateContent(TileTemplateType.TileSquare150x150PeekImageAndText01);
             var tileImage = tileXml.GetElementsByTagName("image")[0] as XmlElement;
             tileImage.SetAttribute("src", "ms-appx:///Assets/Square71x71Logo.scale-100.png");
@@ -55,7 +41,7 @@ namespace BlueQueen.Weather.WindowsPhone
 
             var tileNotification = new TileNotification(tileXml);
             TileUpdateManager.CreateTileUpdaterForApplication().Update(tileNotification);
-
+            // eoTile
             BQ = new BlueQueenCore(@"http://usafeapi.bluequeen.tk", "v1", "token");
             CultureInfo culture = new CultureInfo("en-US");
             WeatherData = BQ.getWeatherData(fromDate: DateTime.Now.ToString("d", culture));
@@ -102,12 +88,6 @@ namespace BlueQueen.Weather.WindowsPhone
             // Set Text
             XmlNodeList toastTextElements = toastXml.GetElementsByTagName("text");
             toastTextElements[0].AppendChild(toastXml.CreateTextNode(message));
-
-            // Set image
-            // Images must be less than 200 KB in size and smaller than 1024 x 1024 pixels.
-            //XmlNodeList toastImageAttributes = toastXml.GetElementsByTagName("image");
-            //((XmlElement)toastImageAttributes[0]).SetAttribute("src", "ms-appx:///Images/logo-80px-80px.png");
-            //((XmlElement)toastImageAttributes[0]).SetAttribute("alt", "logo");
 
             // toast duration
             IXmlNode toastNode = toastXml.SelectSingleNode("/toast");
