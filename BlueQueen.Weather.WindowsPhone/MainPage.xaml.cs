@@ -43,8 +43,18 @@ namespace BlueQueen.Weather.WindowsPhone
 
             ToastTemplateType toastTemplate = ToastTemplateType.ToastImageAndText01;
             XmlDocument toastXml = ToastNotificationManager.GetTemplateContent(toastTemplate);
+            var tileXml = TileUpdateManager.GetTemplateContent(TileTemplateType.TileSquare150x150PeekImageAndText01);
+            var tileImage = tileXml.GetElementsByTagName("image")[0] as XmlElement;
+            tileImage.SetAttribute("src", "ms-appx:///Assets/Square71x71Logo.scale-100.png");
 
-            
+            var tileText = tileXml.GetElementsByTagName("text");
+            (tileText[0] as XmlElement).InnerText = "Wszystko";
+            (tileText[1] as XmlElement).InnerText = "Muszę";
+            (tileText[2] as XmlElement).InnerText = "Robić";
+            (tileText[3] as XmlElement).InnerText = "Sam";
+
+            var tileNotification = new TileNotification(tileXml);
+            TileUpdateManager.CreateTileUpdaterForApplication().Update(tileNotification);
 
             BQ = new BlueQueenCore(@"http://usafeapi.bluequeen.tk", "v1", "token");
             CultureInfo culture = new CultureInfo("en-US");

@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<tile>
+  <visual version="2">
+    <binding template="TileSquare150x150PeekImageAndText01" fallback="TileSquarePeekImageAndText01">
+      <image id="1" src="ms-appx:///Assets/Square71x71Logo.scale-240.png"/>
+      <text id="1">Row 0</text>
+      <text id="2">Row 1</text>
+      <text id="3">Row 2</text>
+      <text id="4">Row 3</text>
+    </binding>
+  </visual>
+</tile>
