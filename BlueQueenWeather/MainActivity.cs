@@ -57,7 +57,7 @@ namespace BlueQueenWeather
             string text = Intent.GetStringExtra("WeatherData") ?? "[]";
             WeatherData = BQ.deserializeJson<WeatherInfo>(text);
             string text1 = Intent.GetStringExtra("PressureData") ?? "[]";
-            PressureData = BQ.deserializeJson<PressureInfo>(text);
+            PressureData = BQ.deserializeJson<PressureInfo>(text1);
             fillTextboxes();
         }
 

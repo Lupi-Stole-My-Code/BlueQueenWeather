@@ -15,9 +15,9 @@
 -->
 
 <resources>
-    <string name="app_name">BlueQueen Weather Widget</string>
+    <string name="app_name">Simple Widget Example</string>
 
-    <string name="widget_name">BlueQueen Weather</string>
+    <string name="widget_name">Simple Widget Sample</string>
 
-    <string name="widget_loading">Loading latest\ndata\u2026</string>
+    <string name="widget_loading">Loading latest\nblog post\u2026</string>
 </resources>
