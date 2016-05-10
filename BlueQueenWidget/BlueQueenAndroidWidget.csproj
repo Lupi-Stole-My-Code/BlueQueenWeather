@@ -100,7 +100,7 @@
   </Target>
   -->
   <ItemGroup>
-    <ProjectReference Include="E:\BQ3.0\plugins\BQ-Weather\Android\BlueQueen\BlueQueen.csproj">
+    <ProjectReference Include="..\BlueQueen\BlueQueen.csproj">
       <Project>{f272997f-0a98-4721-a5ef-8da587c4b936}</Project>
       <Name>BlueQueen</Name>
     </ProjectReference>
