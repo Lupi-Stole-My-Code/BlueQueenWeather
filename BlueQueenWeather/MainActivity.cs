@@ -13,6 +13,10 @@ using System.Globalization;
 using BlueQueen;
 using Android.Graphics.Drawables;
 using System.Linq;
+using OxyPlot;
+using OxyPlot.Axes;
+using OxyPlot.Series;
+using OxyPlot.Xamarin.Android;
 
 namespace BlueQueenWeather
 {
@@ -32,6 +36,9 @@ namespace BlueQueenWeather
         TextView maximaltempTxt = null;
         TextView minimaltempTxt = null;
         TextView averageTemperatureTxt = null;
+        PlotView chart = null;
+        Button tempChartSw = null;
+        Button pressChartSw = null;
 
         //////
 
@@ -70,6 +77,82 @@ namespace BlueQueenWeather
             string text1 = Intent.GetStringExtra("PressureData") ?? "[]";
             PressureData = BQ.deserializeJson<PressureInfo>(text1);
             fillTextboxes();
+
+            chart = FindViewById<PlotView>(Resource.Id.plotview);
+            showTempChart();
+            tempChartSw = FindViewById<Button>(Resource.Id.tempChart);
+            if(tempChartSw != null)
+            {
+                tempChartSw.Click += delegate 
+                {
+                    showTempChart();
+                };
+            }
+            pressChartSw = FindViewById<Button>(Resource.Id.pressChart);
+            if(pressChartSw != null)
+            {
+                pressChartSw.Click += delegate
+                {
+                    showPressureChart();
+                };
+            }
+        }
+        
+
+        private void showTempChart()
+        {
+            if (chart != null)
+            {
+                var plotModel = new PlotModel { Title = "Temperature chart" };
+
+                plotModel.Axes.Add(new LinearAxis { Position = AxisPosition.Bottom, Minimum = 0, Maximum = 24 });
+                plotModel.Axes.Add(new LinearAxis { Unit = "°C", Position = AxisPosition.Left, Maximum = WeatherData.Max(x => x.Value) + 2, Minimum = WeatherData.Min(x => x.Value) - 2 });
+
+                var series1 = new LineSeries
+                {
+                    MarkerType = OxyPlot.MarkerType.Circle,
+                    MarkerSize = 2,
+                    MarkerStroke = OxyPlot.OxyColors.White
+                };
+
+                foreach (var x in WeatherData)
+                {
+                    double d = (double)x.Date.Hour;
+                    double h = ((x.Date.Minute / 60.0));
+                    d += h;
+                    series1.Points.Add(new DataPoint(d, x.Value));
+                }
+                plotModel.Series.Add(series1);
+                chart.Model = plotModel;
+            }
+        }
+
+        private void showPressureChart()
+        {
+            if (chart != null)
+            {
+                var plotModel = new PlotModel { Title = "Pressure chart" };
+
+                plotModel.Axes.Add(new LinearAxis { Position = AxisPosition.Bottom, Minimum = 0, Maximum = 24 });
+                plotModel.Axes.Add(new LinearAxis { Unit = "hPa", Position = AxisPosition.Left, Maximum = PressureData.Max(x => x.Pressure) + 0.5, Minimum = PressureData.Min(x => x.Pressure) - 0.5 });
+
+                var series1 = new LineSeries
+                {
+                    MarkerType = OxyPlot.MarkerType.Circle,
+                    MarkerSize = 2,
+                    MarkerStroke = OxyPlot.OxyColors.White
+                };
+
+                foreach (var x in PressureData)
+                {
+                    double d = (double)x.Date.Hour;
+                    double h = ((x.Date.Minute / 60.0));
+                    d += h;
+                    series1.Points.Add(new DataPoint(d, x.Pressure));
+                }
+                plotModel.Series.Add(series1);
+                chart.Model = plotModel;
+            }
         }
 
         private void test(object sender, EventArgs e)
