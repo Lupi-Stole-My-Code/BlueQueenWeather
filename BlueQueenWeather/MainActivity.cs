@@ -60,7 +60,10 @@ namespace BlueQueenWeather
             minimaltempTxt = FindViewById<TextView>(Resource.Id.minimaltemp);
             averageTemperatureTxt = FindViewById<TextView>(Resource.Id.averagetemp);
             button = FindViewById<Button>(Resource.Id.button1);
-            button.Click += test;
+            if (button != null)
+            {
+                button.Click += test;
+            }
 
             string text = Intent.GetStringExtra("WeatherData") ?? "[]";
             WeatherData = BQ.deserializeJson<WeatherInfo>(text);
@@ -82,10 +85,10 @@ namespace BlueQueenWeather
 
         private void fillTextboxes()
         {
-            var data = WeatherData.FindLast(x => x.Value > -40);
-            var press = PressureData.FindLast(x => x.ID > 0);
             if (tx2 != null)
             {
+                var data = WeatherData.FindLast(x => x.Value > -40);
+                var press = PressureData.FindLast(x => x.ID > 0);
                 //tx1.Text = data.Date.ToLongDateString() + " " + data.Date.ToLongTimeString();
                 tx2.Text = string.Format("{0}°C", data.Value.ToString());
 
