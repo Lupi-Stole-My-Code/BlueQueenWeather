@@ -25,13 +25,13 @@ namespace BlueQueenWeather
 
         //test
         Button button;
-        TextView tx1;
-        TextView tx2;
-        TextView pressureTxt;
-        TextView averagepressureTxt;
-        TextView maximaltempTxt;
-        TextView minimaltempTxt;
-        TextView averageTemperatureTxt;
+        TextView tx1 = null;
+        TextView tx2 = null;
+        TextView pressureTxt = null;
+        TextView averagepressureTxt = null;
+        TextView maximaltempTxt = null;
+        TextView minimaltempTxt = null;
+        TextView averageTemperatureTxt = null;
 
         //////
 
@@ -51,6 +51,7 @@ namespace BlueQueenWeather
 
             BQ = new BlueQueenCore(@"http://usafeapi.bluequeen.tk", "v1", "token");
 
+            //Portrait
             //tx1 = FindViewById<TextView>(Resource.Id.textView1);
             tx2 = FindViewById<TextView>(Resource.Id.textView2);
             averagepressureTxt = FindViewById<TextView>(Resource.Id.averagepress);
@@ -75,21 +76,29 @@ namespace BlueQueenWeather
             PressureData = BQ.getPressureData(fromDate: DateTime.Now.ToString("d", culture));
             // inny sposób na datę. (wymaga daty numerycznej)
             fillTextboxes();
-            Toast toast = Toast.MakeText(this, "Pomyślnie zaktualizowano", ToastLength.Short);
+            Toast toast = Toast.MakeText(this, "Successfully updated", ToastLength.Short);
             toast.Show();
         }
 
         private void fillTextboxes()
         {
             var data = WeatherData.FindLast(x => x.Value > -40);
-            //tx1.Text = data.Date.ToLongDateString() + " " + data.Date.ToLongTimeString();
-            tx2.Text = string.Format("{0}°C", data.Value.ToString());
             var press = PressureData.FindLast(x => x.ID > 0);
-            pressureTxt.Text = string.Format("{0} hPa", press.Pressure.ToString());
-            averagepressureTxt.Text = string.Format("{0:0.00} hPa", PressureData.Average(x => x.Pressure));
-            averageTemperatureTxt.Text = string.Format("{0:0.00}°C", WeatherData.Average(x => x.Value));
-            minimaltempTxt.Text = string.Format("{0:0.00}°C", WeatherData.Min(x => x.Value));
-            maximaltempTxt.Text = string.Format("{0:0.00}°C", WeatherData.Max(x => x.Value));
+            if (tx2 != null)
+            {
+                //tx1.Text = data.Date.ToLongDateString() + " " + data.Date.ToLongTimeString();
+                tx2.Text = string.Format("{0}°C", data.Value.ToString());
+
+                pressureTxt.Text = string.Format("{0} hPa", press.Pressure.ToString());
+                averagepressureTxt.Text = string.Format("{0:0.00} hPa", PressureData.Average(x => x.Pressure));
+                averageTemperatureTxt.Text = string.Format("{0:0.00}°C", WeatherData.Average(x => x.Value));
+                minimaltempTxt.Text = string.Format("{0:0.00}°C", WeatherData.Min(x => x.Value));
+                maximaltempTxt.Text = string.Format("{0:0.00}°C", WeatherData.Max(x => x.Value));
+            }
+            else
+            {
+                Toast toast = Toast.MakeText(this, "Nothing to refresh : Landscape mode", ToastLength.Short);
+            }
         }
 
         private bool validatedCertificate(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
