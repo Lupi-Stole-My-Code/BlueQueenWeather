@@ -27,6 +27,10 @@ namespace BlueQueenWeather
         TextView tx1;
         TextView tx2;
         TextView pressureTxt;
+        TextView averagepressureTxt;
+        TextView maximaltempTxt;
+        TextView minimaltempTxt;
+
         //////
 
         protected override void OnCreate(Bundle bundle)
@@ -48,9 +52,12 @@ namespace BlueQueenWeather
             //WeatherData = BQ.getWeatherData(fromDate: DateTime.Now.ToString());  
             //Przykładowe pobranie dzisiejszych danych (zwraca tablicę WeatherInfo)
 
-            tx1 = FindViewById<TextView>(Resource.Id.textView1);
+            //tx1 = FindViewById<TextView>(Resource.Id.textView1);
             tx2 = FindViewById<TextView>(Resource.Id.textView2);
+            averagepressureTxt = FindViewById<TextView>(Resource.Id.averagepress);
             pressureTxt = FindViewById<TextView>(Resource.Id.cisnienie);
+            maximaltempTxt = FindViewById<TextView>(Resource.Id.maximaltemp);
+            minimaltempTxt = FindViewById<TextView>(Resource.Id.minimaltemp);
             button = FindViewById<Button>(Resource.Id.button1);
             button.Click += test;
 
@@ -75,7 +82,7 @@ namespace BlueQueenWeather
         private void fillTextboxes()
         {
             var data = WeatherData.FindLast(x => x.Value > -40);
-            tx1.Text = data.Date.ToLongDateString() + " " + data.Date.ToLongTimeString();
+            //tx1.Text = data.Date.ToLongDateString() + " " + data.Date.ToLongTimeString();
             tx2.Text = string.Format("{0}°C", data.Value.ToString());
             var press = PressureData.FindLast(x => x.ID > 0);
             pressureTxt.Text = string.Format("{0} hPa", press.Pressure.ToString());
