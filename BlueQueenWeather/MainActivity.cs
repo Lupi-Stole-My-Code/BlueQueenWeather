@@ -72,7 +72,7 @@ namespace BlueQueenWeather
                 {
                     double a = WeatherData.Min(x => x.Value);
                     var min = WeatherData.First(x => x.Value.ToString() == a.ToString());
-                    ShowAlert(min.Date.ToLongDateString() + "\nToday's MIN : " + min.Value.ToString() + "°C\nMeasured at " + min.Date.ToShortTimeString());
+                    ShowAlert(min.Date.ToLongDateString() + "\nToday's MIN : " + min.Value.ToString() + "°C\nMeasured on " + min.Date.ToShortTimeString());
                 };
             }
 
@@ -82,7 +82,7 @@ namespace BlueQueenWeather
                 {
                     double a = WeatherData.Max(x => x.Value);
                     var min = WeatherData.First(x => x.Value.ToString() == a.ToString());
-                    ShowAlert(min.Date.ToLongDateString() + "\nToday's MAX : " + min.Value.ToString() + "°C\nMeasured at " + min.Date.ToShortTimeString());
+                    ShowAlert(min.Date.ToLongDateString() + "\nToday's MAX : " + min.Value.ToString() + "°C\nMeasured on " + min.Date.ToShortTimeString());
                 };
             }
 
@@ -120,7 +120,7 @@ namespace BlueQueenWeather
                 {
                     var min = WeatherData.FindLast(x => x.ID > 0);
                     string last = string.Format("{0:0.00}°C", min.Value);
-                    ShowAlert("Measured at:\n" + min.Date.ToLongDateString() + " " + min.Date.ToLongTimeString());
+                    ShowAlert("Measured on:\n" + min.Date.ToLongDateString() + " " + min.Date.ToLongTimeString());
                 };
             }
             if (pressureTxt != null)
@@ -129,7 +129,7 @@ namespace BlueQueenWeather
                 {
                     var min = PressureData.FindLast(x => x.ID > 0);
                     string last = string.Format("{0:0.00} hPa", min.Pressure);
-                    ShowAlert("Measured at:\n" + min.Date.ToLongDateString() + " " + min.Date.ToLongTimeString());
+                    ShowAlert("Measured on:\n" + min.Date.ToLongDateString() + " " + min.Date.ToLongTimeString());
                 };
             }
 
