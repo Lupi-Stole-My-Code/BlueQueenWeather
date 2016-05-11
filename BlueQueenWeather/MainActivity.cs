@@ -26,8 +26,6 @@ namespace BlueQueenWeather
         BlueQueenCore BQ;
         List<WeatherInfo> WeatherData = new List<WeatherInfo>();
         List<PressureInfo> PressureData = new List<PressureInfo>();
-
-        //test
         Button button;
         TextView tx1 = null;
         TextView tx2 = null;
@@ -39,8 +37,6 @@ namespace BlueQueenWeather
         PlotView chart = null;
         Button tempChartSw = null;
         Button pressChartSw = null;
-
-        //////
 
         protected override void OnCreate(Bundle bundle)
         {
@@ -59,7 +55,6 @@ namespace BlueQueenWeather
             BQ = new BlueQueenCore(@"http://usafeapi.bluequeen.tk", "v1", "token");
 
             //Portrait
-            //tx1 = FindViewById<TextView>(Resource.Id.textView1);
             tx2 = FindViewById<TextView>(Resource.Id.textView2);
             averagepressureTxt = FindViewById<TextView>(Resource.Id.averagepress);
             pressureTxt = FindViewById<TextView>(Resource.Id.cisnienie);
@@ -70,6 +65,72 @@ namespace BlueQueenWeather
             if (button != null)
             {
                 button.Click += test;
+            }
+            if(minimaltempTxt != null)
+            {
+                minimaltempTxt.Click += delegate
+                {
+                    double a = WeatherData.Min(x => x.Value);
+                    var min = WeatherData.First(x => x.Value.ToString() == a.ToString());
+                    ShowAlert(min.Date.ToLongDateString() + "\nToday's MIN : " + min.Value.ToString() + "°C\nMeasured at " + min.Date.ToShortTimeString());
+                };
+            }
+
+            if (maximaltempTxt != null)
+            {
+                maximaltempTxt.Click += delegate
+                {
+                    double a = WeatherData.Max(x => x.Value);
+                    var min = WeatherData.First(x => x.Value.ToString() == a.ToString());
+                    ShowAlert(min.Date.ToLongDateString() + "\nToday's MAX : " + min.Value.ToString() + "°C\nMeasured at " + min.Date.ToShortTimeString());
+                };
+            }
+
+            if (averageTemperatureTxt != null)
+            {
+                averageTemperatureTxt.Click += delegate
+                {
+                    var a = WeatherData.Average(x => x.Value);
+                    string avg = string.Format("{0:0.00}°C", a);
+                    var min = WeatherData.FindLast(x => x.ID > 0);
+                    string last = string.Format("{0:0.00}°C", min.Value);
+                    string diff = string.Format("{0:0.00}°C", Math.Abs(a - min.Value));
+
+                    ShowAlert(min.Date.ToLongDateString() + "\nToday's AVG : " + avg + "\nCurrent : " + last + "\nDiff : " + diff);
+                };
+            }
+
+            if (averagepressureTxt != null)
+            {
+                averagepressureTxt.Click += delegate
+                {
+                    var a = PressureData.Average(x => x.Pressure);
+                    string avg = string.Format("{0:0.00} hPa", a);
+                    var min = PressureData.FindLast(x => x.ID > 0);
+                    string last = string.Format("{0:0.00} hPa", min.Pressure);
+                    string diff = string.Format("{0:0.00} hPa", Math.Abs(a - min.Pressure));
+
+                    ShowAlert(min.Date.ToLongDateString() + "\nToday's AVG : " + avg + "\nCurrent : " + last + "\nDiff : " + diff);
+                };
+            }
+
+            if(tx2 != null)
+            {
+                tx2.Click += delegate
+                {
+                    var min = WeatherData.FindLast(x => x.ID > 0);
+                    string last = string.Format("{0:0.00}°C", min.Value);
+                    ShowAlert("Measured at:\n" + min.Date.ToLongDateString() + " " + min.Date.ToLongTimeString());
+                };
+            }
+            if (pressureTxt != null)
+            {
+                pressureTxt.Click += delegate
+                {
+                    var min = PressureData.FindLast(x => x.ID > 0);
+                    string last = string.Format("{0:0.00} hPa", min.Pressure);
+                    ShowAlert("Measured at:\n" + min.Date.ToLongDateString() + " " + min.Date.ToLongTimeString());
+                };
             }
 
             string text = Intent.GetStringExtra("WeatherData") ?? "[]";
@@ -97,7 +158,22 @@ namespace BlueQueenWeather
                 };
             }
         }
-        
+
+        public void ShowAlert(string str)
+        {
+            AlertDialog.Builder alert = new AlertDialog.Builder(this);
+            alert.SetTitle("Extended Info");
+            alert.SetMessage(str);
+            alert.SetPositiveButton("OK", (senderAlert, args) => {
+                // write your own set of instructions
+            });
+
+            //run the alert in UI thread to display in the screen
+            RunOnUiThread(() => {
+                alert.Show();
+            });
+        }
+
 
         private void showTempChart()
         {
@@ -118,7 +194,7 @@ namespace BlueQueenWeather
                 foreach (var x in WeatherData)
                 {
                     double d = (double)x.Date.Hour;
-                    double h = ((x.Date.Minute / 60.0));
+                    double h = x.Date.Minute / 60.0;
                     d += h;
                     series1.Points.Add(new DataPoint(d, x.Value));
                 }
@@ -146,7 +222,7 @@ namespace BlueQueenWeather
                 foreach (var x in PressureData)
                 {
                     double d = (double)x.Date.Hour;
-                    double h = ((x.Date.Minute / 60.0));
+                    double h = x.Date.Minute / 60.0;
                     d += h;
                     series1.Points.Add(new DataPoint(d, x.Pressure));
                 }
@@ -160,7 +236,6 @@ namespace BlueQueenWeather
             CultureInfo culture = new CultureInfo("en-US");
             WeatherData = BQ.getWeatherData(fromDate: DateTime.Now.ToString("d", culture));
             PressureData = BQ.getPressureData(fromDate: DateTime.Now.ToString("d", culture));
-            // inny sposób na datę. (wymaga daty numerycznej)
             fillTextboxes();
             Toast toast = Toast.MakeText(this, "Successfully updated", ToastLength.Short);
             toast.Show();
