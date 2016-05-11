@@ -1681,8 +1681,8 @@ namespace BlueQueenWeather
 			// aapt resource value: 0x7f0b006a
 			public const int loadingState = 2131427434;
 			
-			// aapt resource value: 0x7f0b0055
-			public const int maximaltemp = 2131427413;
+			// aapt resource value: 0x7f0b0056
+			public const int maximaltemp = 2131427414;
 			
 			// aapt resource value: 0x7f0b005f
 			public const int media_actions = 2131427423;
@@ -1690,8 +1690,8 @@ namespace BlueQueenWeather
 			// aapt resource value: 0x7f0b001b
 			public const int middle = 2131427355;
 			
-			// aapt resource value: 0x7f0b0056
-			public const int minimaltemp = 2131427414;
+			// aapt resource value: 0x7f0b0055
+			public const int minimaltemp = 2131427413;
 			
 			// aapt resource value: 0x7f0b0014
 			public const int multiply = 2131427348;

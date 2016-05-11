@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using BlueQueen;
 using Android.Graphics.Drawables;
+using System.Linq;
 
 namespace BlueQueenWeather
 {
@@ -30,6 +31,7 @@ namespace BlueQueenWeather
         TextView averagepressureTxt;
         TextView maximaltempTxt;
         TextView minimaltempTxt;
+        TextView averageTemperatureTxt;
 
         //////
 
@@ -49,15 +51,13 @@ namespace BlueQueenWeather
 
             BQ = new BlueQueenCore(@"http://usafeapi.bluequeen.tk", "v1", "token");
 
-            //WeatherData = BQ.getWeatherData(fromDate: DateTime.Now.ToString());  
-            //Przykładowe pobranie dzisiejszych danych (zwraca tablicę WeatherInfo)
-
             //tx1 = FindViewById<TextView>(Resource.Id.textView1);
             tx2 = FindViewById<TextView>(Resource.Id.textView2);
             averagepressureTxt = FindViewById<TextView>(Resource.Id.averagepress);
             pressureTxt = FindViewById<TextView>(Resource.Id.cisnienie);
             maximaltempTxt = FindViewById<TextView>(Resource.Id.maximaltemp);
             minimaltempTxt = FindViewById<TextView>(Resource.Id.minimaltemp);
+            averageTemperatureTxt = FindViewById<TextView>(Resource.Id.averagetemp);
             button = FindViewById<Button>(Resource.Id.button1);
             button.Click += test;
 
@@ -86,6 +86,10 @@ namespace BlueQueenWeather
             tx2.Text = string.Format("{0}°C", data.Value.ToString());
             var press = PressureData.FindLast(x => x.ID > 0);
             pressureTxt.Text = string.Format("{0} hPa", press.Pressure.ToString());
+            averagepressureTxt.Text = string.Format("{0:0.00} hPa", PressureData.Average(x => x.Pressure));
+            averageTemperatureTxt.Text = string.Format("{0:0.00}°C", WeatherData.Average(x => x.Value));
+            minimaltempTxt.Text = string.Format("{0:0.00}°C", WeatherData.Min(x => x.Value));
+            maximaltempTxt.Text = string.Format("{0:0.00}°C", WeatherData.Max(x => x.Value));
         }
 
         private bool validatedCertificate(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
