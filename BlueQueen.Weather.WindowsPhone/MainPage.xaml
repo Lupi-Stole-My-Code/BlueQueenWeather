@@ -8,10 +8,38 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    
+
     <Grid>
-        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="29,29,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="48" Width="140"/>
-        <Button x:Name="btn_refresh" Content="Refresh" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="49,145,0,0" Click="refreshData"/>
-       
+        <Button x:Name="currentemp_btn" Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,60,0,0" Height="126" Width="188" BorderBrush="White" Click="currentemp_btn_Click">
+            <Button.Background>
+                <ImageBrush Stretch="Fill" ImageSource="Assets/current.PNG"/>
+            </Button.Background>
+        </Button>
+        <Button x:Name="averagetemp_btn" Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="202,60,0,0" Height="126" Width="188" Click="averagetemp_btn_Click">
+            <Button.Background>
+                <ImageBrush Stretch="Fill" ImageSource="Assets/average.PNG"/>
+            </Button.Background>
+        </Button>
+        <Button x:Name="refresh_btn" Content="Refresh" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,396,0,0" Height="61" Width="380" Background="#FFFDD210" Click="refresh_btn_Click"/>
+        <Button x:Name="currentpress_btn" Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,284,0,0" Height="126" Width="188" Click="currentpress_btn_Click">
+            <Button.Background>
+                <ImageBrush Stretch="Fill" ImageSource="Assets/currentpress.PNG"/>
+            </Button.Background>
+        </Button>
+        <Button x:Name="averagepress_btn" Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="202,284,0,0" Height="126" Width="188" Click="averagepress_btn_Click">
+            <Button.Background>
+                <ImageBrush Stretch="Fill" ImageSource="Assets/averagepress.PNG"/>
+            </Button.Background>
+        </Button>
+        <Button x:Name="minimaltemp_btn" Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,172,0,0" Height="126" Width="188" Click="minimaltemp_btn_Click">
+            <Button.Background>
+                <ImageBrush Stretch="Fill" ImageSource="Assets/minimal.PNG"/>
+            </Button.Background>
+        </Button>
+        <Button x:Name="maximaltemp_btn" Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="202,172,0,0" Height="126" Width="188" Click="maximaltemp_btn_Click">
+            <Button.Background>
+                <ImageBrush Stretch="Fill" ImageSource="Assets/maximal.PNG"/>
+            </Button.Background>
+        </Button>
     </Grid>
 </Page>
