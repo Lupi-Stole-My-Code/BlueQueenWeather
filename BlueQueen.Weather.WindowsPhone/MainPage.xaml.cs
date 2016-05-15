@@ -10,10 +10,7 @@ using Windows.Data.Xml.Dom;
 using System.Linq;
 using BlueQueen;
 using Windows.UI.Popups;
-
-
-
-// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=391641
+using Windows.Graphics.Display;
 
 namespace BlueQueen.Weather.WindowsPhone
 {
@@ -30,23 +27,8 @@ namespace BlueQueen.Weather.WindowsPhone
         public MainPage()
         {
             this.InitializeComponent();
-
-            this.DataContext = new MainPageModel();
-            this.NavigationCacheMode = NavigationCacheMode.Required;
-            //tile
-            var tileXml = TileUpdateManager.GetTemplateContent(TileTemplateType.TileSquare150x150PeekImageAndText01);
-            var tileImage = tileXml.GetElementsByTagName("image")[0] as XmlElement;
-            tileImage.SetAttribute("src", "ms-appx:///Assets/Square71x71Logo.scale-100.png");
-
-            var tileText = tileXml.GetElementsByTagName("text");
-            (tileText[0] as XmlElement).InnerText = "Wszystko";
-            (tileText[1] as XmlElement).InnerText = "Muszę";
-            (tileText[2] as XmlElement).InnerText = "Robić";
-            (tileText[3] as XmlElement).InnerText = "Sam";
-
-            var tileNotification = new TileNotification(tileXml);
-            TileUpdateManager.CreateTileUpdaterForApplication().Update(tileNotification);
-            // eoTile
+            DisplayProperties.OrientationChanged += Orientation;
+            
             BQ = new BlueQueenCore(@"http://usafeapi.bluequeen.tk", "v1", "token");
             CultureInfo culture = new CultureInfo("en-US");
             WeatherData = BQ.getWeatherData(fromDate: DateTime.Now.ToString("d", culture));
@@ -54,6 +36,33 @@ namespace BlueQueen.Weather.WindowsPhone
 
             //var test = WeatherData;
             fillTextBlock();
+
+            //tile
+            var tileXml = TileUpdateManager.GetTemplateContent(TileTemplateType.TileSquare150x150PeekImageAndText01);
+            var tileImage = tileXml.GetElementsByTagName("image")[0] as XmlElement;
+            tileImage.SetAttribute("src", "ms-appx:///Assets/Square71x71Logo.scale-100.png");
+
+            var tileText = tileXml.GetElementsByTagName("text");
+            WeatherInfo lastTemp = WeatherData.Last(x => x.ID > 0);
+            PressureInfo lastPress = PressureData.Last(x => x.ID > 0);
+            (tileText[0] as XmlElement).InnerText = "Wejherowo";
+            (tileText[1] as XmlElement).InnerText = lastTemp.Date.ToString();
+            (tileText[2] as XmlElement).InnerText = string.Format("{0}°C", lastTemp.Value.ToString());
+            (tileText[3] as XmlElement).InnerText = string.Format("{0} hPa", lastPress.Pressure.ToString());
+            var tileNotification = new TileNotification(tileXml);
+            TileUpdateManager.CreateTileUpdaterForApplication().Update(tileNotification);
+            // eoTile
+        }
+
+        public void Orientation(object sender)
+        {
+            switch (DisplayProperties.CurrentOrientation)
+            {
+                case DisplayOrientations.Landscape:
+                case DisplayOrientations.LandscapeFlipped:
+                    Frame.Navigate(typeof(Lnadscape));
+                    break;
+            }
         }
 
         /// <summary>
