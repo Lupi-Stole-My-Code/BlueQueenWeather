@@ -31,6 +31,7 @@ namespace BlueQueen.Weather.WindowsPhone
         {
             this.InitializeComponent();
 
+            this.DataContext = new MainPageModel();
             this.NavigationCacheMode = NavigationCacheMode.Required;
             //tile
             var tileXml = TileUpdateManager.GetTemplateContent(TileTemplateType.TileSquare150x150PeekImageAndText01);

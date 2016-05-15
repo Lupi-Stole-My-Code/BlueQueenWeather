@@ -5,11 +5,17 @@
     xmlns:local="using:BlueQueen.Weather.WindowsPhone"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:oxy="using:OxyPlot.Windows"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
+    <Page.DataContext>
+        <local:MainPageModel/>
+    </Page.DataContext>
 
     <Grid>
+        <oxy:PlotView Model="{Binding Model}"/>
+
         <Button x:Name="currentemp_btn" Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,60,0,0" Height="126" Width="188" BorderBrush="White" Click="currentemp_btn_Click">
             <Button.Background>
                 <ImageBrush Stretch="Fill" ImageSource="Assets/current.PNG"/>
@@ -40,6 +46,6 @@
             <Button.Background>
                 <ImageBrush Stretch="Fill" ImageSource="Assets/maximal.PNG"/>
             </Button.Background>
-        </Button>
+        </Button>  
     </Grid>
 </Page>
